@@ -2,7 +2,7 @@
 
 The application (seen below in the picture) consists of only one main screen that includes the map, two buttons, your location marker and markers of people that are lost.
 
-![App Picture](https://github.com/LostFound-Application/LostFound-Front-New/blob/master/documentation/app_picture.png)
+<img src="https://github.com/LostFound-Application/LostFound-Front-New/blob/master/documentation/app_picture.png" alt="App" width="300"/>
 
 The map that is used in application is from Goole Maps API. The map uses react-native-maps library for components used for the map and the markers. Your own location can also been seen on the map as the blue marker with the arrow that shows the way the phone is heading towards. There also is "Locate yourself"-button on top-right and also some other features like button (that can be seen when clicking a marker on the map), which opens Google Maps application with directions to the selected marker.
 
