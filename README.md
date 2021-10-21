@@ -13,11 +13,11 @@ After you have installed Android Studio's virtual device on your localhost machi
 Install the dependencies with:
 `npm install`
 
-
 Start the application:
 `npx react-native run-android`
 
-If you want to Start Metro type this in command line in the directory where the app is:
+If you want to start Metro which is good to use when in development environment use this command in command line in the directory where the app is:
+
 Start  Metro:
 `npx react-native start`
 
