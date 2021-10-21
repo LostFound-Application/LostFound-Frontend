@@ -3,10 +3,13 @@ import {Button} from 'react-native-elements';
 import Map from './components/Map';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
-import {sendYourLocationData, updateMe} from './services/locationDataService';
+import {
+  reportMyselfAsFound,
+  sendYourLocationData,
+  updateMe,
+} from './services/locationDataService';
 import dgram from 'react-native-udp';
 import Geolocation from 'react-native-geolocation-service';
-import {getUniqueId} from 'react-native-device-info';
 
 export default function App() {
   const [location, setLocation] = useState({
@@ -15,15 +18,14 @@ export default function App() {
   });
   const [locationList, setLocationList] = useState([]);
 
-  let uniqueId = getUniqueId();
-  const okMessage = 'OK';
-
   const socket = dgram.createSocket('udp4');
   socket.bind(12345);
 
   socket.on('error', err => {
     console.log(`server error:\n${err.stack}`);
   });
+
+  const okMessage = 'OK';
 
   socket.on('message', function (msg, rinfo) {
     const serverPort = rinfo.port;
@@ -38,16 +40,11 @@ export default function App() {
         if (err) {
           throw err;
         }
-
         console.log('OK Message sent!');
+        updateMe(setLocationList);
       },
     );
   });
-
-  const timerId = setInterval(() => {
-    updateMe(socket, setLocationList);
-    console.log('test', locationList);
-  }, 10000);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -68,13 +65,26 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <Map location={location} locationList={locationList} />
+        <Map
+          location={location}
+          setLocationList={setLocationList}
+          locationList={locationList}
+        />
         <Button
-          title="Report Myself Lost"
-          containerStyle={styles.buttonContainer}
+          title="Report Myself as Lost"
+          containerStyle={styles.buttonContainerLost}
+          buttonStyle={styles.buttonLost}
+          raised
+          onPress={() =>
+            sendYourLocationData(socket, location, setLocationList)
+          }
+        />
+        <Button
+          title="Report Myself as Found"
+          containerStyle={styles.buttonContainerFound}
           buttonStyle={styles.button}
           raised
-          onPress={() => sendYourLocationData(socket, uniqueId, location)}
+          onPress={() => reportMyselfAsFound(socket, setLocationList)}
         />
       </View>
     </SafeAreaProvider>
@@ -87,11 +97,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button: {
+  buttonLost: {
     backgroundColor: 'red',
   },
-  buttonContainer: {
-    bottom: 40,
+  buttonContainerLost: {
+    bottom: 70,
+    position: 'absolute',
+  },
+  buttonContainerFound: {
+    bottom: 20,
     position: 'absolute',
   },
 });
