@@ -28,5 +28,6 @@ Remember to have the backend server running from:
 
 https://github.com/LostFound-Application/LostFound-Server
 # App Documentation
+The frontend side documentation was written to follow the user stories that we had planned for the application. 
 
 [Link to App Documentation](https://github.com/LostFound-Application/LostFound-Front-New/blob/master/documentation/App.md)
