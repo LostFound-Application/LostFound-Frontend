@@ -6,7 +6,8 @@
 
 Requirements: Node, React Natice command line interface, a JDK & Android Studio
 For more in-depth instructions how to install development environment for the application, 
-go here: https://reactnative.dev/docs/environment-setup
+go here: 
+https://reactnative.dev/docs/environment-setup
 
 After you have installed Android Studio's virtual device on your localhost machine continue with these steps.
 
